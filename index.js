@@ -117,6 +117,7 @@
             if (shouldFlatten) {
                 args.push("flatten");
             }
+            args.push('need_apperances');
             execFile( "pdftk", args, function (error, stdout, stderr) {
 
                 if ( error ) {
