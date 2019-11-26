@@ -112,7 +112,7 @@
             var tempFDFFile =  "temp_data" + currentTime + randomSequence + ".fdf",
                 tempFDF = (typeof tempFDFPath !== "undefined"? tempFDFPath + '/' + tempFDFFile: tempFDFFile),
 
-            const builder = new xfdf({
+            builder = new xfdf({
                 pdf: sourceFile,
                 translateBools: true,
                 format: {
@@ -123,7 +123,7 @@
             });
 
             builder.fromJSON(fieldValues);
-            const xfdData = builder.generate();
+            var xfdData = builder.generate();
             fs.writeFileSync(tempFDF, xfdData, 'utf8');
 
             var args = [sourceFile, "fill_form", tempFDF, "output", destinationFile];
