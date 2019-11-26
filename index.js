@@ -9,6 +9,7 @@
 (function(){
     var child_process = require('child_process'),
         execFile = require('child_process').execFile,
+        xfdf = require('xfdf');
         fdf = require('utf8-fdf-generator'),
         _ = require('lodash'),
         fs = require('fs');
@@ -111,7 +112,19 @@
             var tempFDFFile =  "temp_data" + currentTime + randomSequence + ".fdf",
                 tempFDF = (typeof tempFDFPath !== "undefined"? tempFDFPath + '/' + tempFDFFile: tempFDFFile),
 
-                formData = fdf.generator( fieldValues, tempFDF );
+            const builder = new xfdf({
+                pdf: sourcePDF,
+                translateBools: true,
+                format: {
+                    pretty: false,
+                    indent: '  ',
+                    newline: '\r\n'
+                }
+                });
+
+            builder.fromJSON(data);
+            const xfdData = builder.generate();
+            fs.writeFileSync(tempFDF, xfdData, 'utf8');
 
             var args = [sourceFile, "fill_form", tempFDF, "output", destinationFile];
             if (shouldFlatten) {
