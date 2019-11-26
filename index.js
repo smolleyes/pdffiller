@@ -113,16 +113,16 @@
                 tempFDF = (typeof tempFDFPath !== "undefined"? tempFDFPath + '/' + tempFDFFile: tempFDFFile),
 
             const builder = new xfdf({
-                pdf: sourcePDF,
+                pdf: sourceFile,
                 translateBools: true,
                 format: {
                     pretty: false,
                     indent: '  ',
                     newline: '\r\n'
                 }
-                });
+            });
 
-            builder.fromJSON(data);
+            builder.fromJSON(fieldValues);
             const xfdData = builder.generate();
             fs.writeFileSync(tempFDF, xfdData, 'utf8');
 
